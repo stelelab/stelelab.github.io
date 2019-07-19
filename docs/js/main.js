@@ -32,15 +32,15 @@ async function appendPost (post) {
 
   let postNumber = document.createElement('span')
   postNumber.classList.add('number')
-  postNumber.innerHTML = `#${post.returnValues.postIdx}`
+  postNumber.textContent = `#${post.returnValues.postIdx}`
 
   let postCreator = document.createElement('span')
   postCreator.classList.add('creator')
-  postCreator.innerHTML = post.returnValues.creator
+  postCreator.textContent = post.returnValues.creator
 
   let postBlockHeight = document.createElement('span')
   postBlockHeight.classList.add('block-height')
-  postBlockHeight.innerHTML = `- ${post.blockNumber}`
+  postBlockHeight.textContent = `- ${post.blockNumber}`
 
   postInfo.appendChild(postNumber)
   postInfo.appendChild(postCreator)
@@ -48,7 +48,7 @@ async function appendPost (post) {
 
   let postContent = document.createElement('div')
   postContent.classList.add('post-content')
-  postContent.innerHTML = post.returnValues.data
+  postContent.textContent = post.returnValues.data
 
   postBlock.appendChild(postInfo)
   postBlock.appendChild(postContent)
