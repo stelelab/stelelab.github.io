@@ -1,14 +1,15 @@
 async function getPostIdx (contract) {
   return contract.methods.postIdx().call().then(function (result) {
-    return result
+    return result - 1
   })
 }
 
-async function loadPage (contract, lastIdx) {
+async function loadPage (contract, lastIdx, pageSize) {
   let postIdxList = []
-  for (let i = 0; i < 10 && lastIdx - i >= 0; i++) {
+  for (let i = 0; i < pageSize && lastIdx - i >= 0; i++) {
     postIdxList.push(lastIdx - i)
   }
+
   contract.getPastEvents('Posted', {
     fromBlock: 8179906,
     filter: {
@@ -64,9 +65,19 @@ async function startApp () {
   const abi = JSON.parse(`[{"constant":true,"inputs":[],"name":"postIdx","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"data","type":"string"}],"name":"Post","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"postIdx","type":"uint256"},{"indexed":true,"name":"creator","type":"address"},{"indexed":false,"name":"data","type":"string"}],"name":"Posted","type":"event"}]`)
   const contract = new web3.eth.Contract(abi, address)
 
+  const pageSize = 5
+
   let postIdx = await getPostIdx(contract)
 
-  loadPage(contract, postIdx)
+  loadPage(contract, postIdx, pageSize)
+  postIdx -= pageSize
+
+  window.addEventListener('scroll', async function(event) {
+    if (document.documentElement.scrollHeight - event.pageY < document.documentElement.clientHeight * 2 && postIdx >= 0) {
+      loadPage(contract, postIdx, pageSize)
+      postIdx -= pageSize
+    }
+  })
 }
 
 window.addEventListener('load', function () {
