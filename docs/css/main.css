@@ -1,0 +1,26 @@
+body {
+  font-family: System-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+}
+#nav-bar {
+  float: right;
+}
+#post-timeline {
+  max-width: 600px;
+  margin: 0 auto;
+}
+#post-timeline .post {
+  margin: 10px;
+}
+#post-timeline .post .post-info {
+  margin: 10px;
+}
+#post-timeline .post .post-info .number {
+  font-size: 2.5em;
+  padding-right: 0.5em;
+}
+#post-timeline .post .post-info .creator {
+  padding-right: 0.5em;
+}
+#post-timeline .post .post-info .block-height {
+  color: #999999;
+}
