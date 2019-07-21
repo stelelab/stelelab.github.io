@@ -17,9 +17,8 @@ async function getUsername (address) {
   })
 }
 
-async function startLoadingCheck () {
+async function startLoadingCheck (postIdx) {
   const pageSize = 10
-  let postIdx = await getPostIdx()
 
   if (window.pageShouldLoad) {
     if (postIdx >= 0) {
@@ -92,7 +91,9 @@ async function startApp () {
   window.Username = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"username","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_username","type":"bytes32"}],"name":"Update","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"used","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"user","type":"address"},{"indexed":false,"name":"username","type":"bytes32"}],"name":"Updated","type":"event"}]`), '0xf35974226f5A7464D1B39AF1c11a3e2109e7C694')
 
   window.pageShouldLoad = true
-  startLoadingCheck()
+
+  let postIdx = await getPostIdx()
+  startLoadingCheck(postIdx)
 
   window.addEventListener('scroll', async function(event) {
     if (document.documentElement.scrollHeight - event.pageY < document.documentElement.clientHeight * 2) {
