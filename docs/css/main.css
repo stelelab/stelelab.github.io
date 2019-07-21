@@ -94,12 +94,12 @@ textarea::selection {
 #post-timeline .post .post-info a {
   color: black;
   text-decoration: none;
-  font-weight: bold;
 }
 #post-timeline .post .post-info a:hover {
   color: #555;
 }
 #post-timeline .post .post-info .number {
+  font-weight: bold;
   font-size: 2.5em;
   padding-right: 0.5em;
 }

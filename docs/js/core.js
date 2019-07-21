@@ -97,20 +97,23 @@ window._xpost.appendPost = async function (post) {
   let postNumber = document.createElement('span')
   postNumber.classList.add('number')
   postNumber.textContent = `#${post.returnValues.postIdx} `
-  postNumberWrap.href = `${window.location.protocol}//${window.location.host}/p#${post.returnValues.postIdx}`
+  postNumberWrap.href = `${window.location.protocol}//${window.location.host}/p#${postNumber.textContent}`
   postNumberWrap.appendChild(postNumber)
 
+  let postCreatorWrap = document.createElement('a')
   let postCreator = document.createElement('span')
   let userName = await window._xpost.getUsername(post.returnValues.creator)
   postCreator.classList.add('creator')
   postCreator.textContent = userName || post.returnValues.creator
+  postCreatorWrap.href = `${window.location.protocol}//${window.location.host}/u#${postCreator.textContent}`
+  postCreatorWrap.appendChild(postCreator)
 
   let postBlockHeight = document.createElement('span')
   postBlockHeight.classList.add('block-height')
   postBlockHeight.textContent = `- ${post.blockNumber}`
 
   postInfo.appendChild(postNumberWrap)
-  postInfo.appendChild(postCreator)
+  postInfo.appendChild(postCreatorWrap)
   postInfo.appendChild(postBlockHeight)
 
   let postContent = document.createElement('div')
