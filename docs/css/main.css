@@ -47,6 +47,9 @@ a:hover {
 #nav-bar .right {
   margin-right: 10px;
 }
+#nav-bar-padding {
+  height: 50px;
+}
 #post-dialog {
   top: 0;
   left: 0;
@@ -91,8 +94,25 @@ a:hover {
   text-align: center;
   display: none;
 }
+#user-information {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 40px;
+}
+#user-information .username {
+  font-size: 3em;
+  font-weight: bold;
+  padding: 20px 0;
+}
+#user-information .address {
+  padding: 20px 0;
+  font-size: 1.3em;
+  color: #999;
+}
+#user-information .description {
+  padding: 20px 0;
+}
 #post-timeline {
-  padding-top: 40px;
   max-width: 640px;
   margin: 0 auto;
   overflow: hidden;
