@@ -27,7 +27,7 @@ window._xpost.getAddress = async function (username) {
 window._xpost.startLoadingCheck = async function startLoadingCheck (postIdx) {
   const pageSize = 10
   if (typeof postIdx === 'undefined') {
-      postIdx = await window._xpost.getPostIdx()
+    postIdx = await window._xpost.getPostIdx()
   }
 
   if (window._xpost.pageShouldLoad) {
@@ -37,7 +37,7 @@ window._xpost.startLoadingCheck = async function startLoadingCheck (postIdx) {
     }
     window._xpost.pageShouldLoad = false
   }
-  setTimeout(function () {window._xpost.startLoadingCheck(postIdx)}, 100)
+  setTimeout(function () { window._xpost.startLoadingCheck(postIdx) }, 100)
 }
 
 window._xpost.loadWithIdx = async function (idx) {
@@ -179,7 +179,7 @@ window._xpost.startApp = async function () {
   })
   document.querySelector('#create-post').addEventListener('click', window._xpost.createPost)
 
-  window._xpost.pageAppStart()
+  window.dispatchEvent(new CustomEvent('coreLoaded'))
 }
 
 window.addEventListener('load', function () {

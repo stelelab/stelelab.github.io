@@ -1,4 +1,4 @@
-window._xpost.pageAppStart = async function () {
+window.addEventListener('coreLoaded', async function () {
   let username = window.location.hash.replace('#', '')
   let address
   if (username.startsWith('0x')) {
@@ -12,4 +12,4 @@ window._xpost.pageAppStart = async function () {
     }
   }
   window._xpost.loadPageWithUserAddress(address)
-}
+})

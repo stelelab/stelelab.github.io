@@ -1,4 +1,4 @@
-window._xpost.pageAppStart = async function () {
+window.addEventListener('coreLoaded', async function () {
   window._xpost.pageShouldLoad = true
   window._xpost.startLoadingCheck()
 
@@ -8,4 +8,4 @@ window._xpost.pageAppStart = async function () {
       window._xpost.pageShouldLoad = true
     }
   })
-}
+})
