@@ -16,10 +16,25 @@
     <meta name="description" content="xpost.app">
     <meta name="author" content="xpostlab">
 
+    <link rel="stylesheet" href="/css/reset.css"/>
     <link rel="stylesheet" href="/css/main.css"/>
   </head>
   <body>
-    <div id="nav-bar">XPost V0.0.6</div>
+    <div id="post-dialog">
+      <div class="popup">
+        <div class="header">
+          <button type="button" id="close-post-dialog">X</button>
+          <button type="button">Create</button>
+        </div>
+        <div class="content">
+          <textarea></textarea>
+        </div>
+      </div>
+    </div>
+    <div id="nav-bar">
+      <button type="button" name="button" id="show-post-dialog">Create Post</button>
+      <span>XPost V0.0.7</span>
+    </div>
     <div id="post-timeline"></div>
   </body>
   <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js" integrity="sha384-ohHihtNCeV+nANVRC/pjmE/UTXjBH4DhrTT0hBMYOaI1AXxaKUg7apjcpJQTKIf6" crossorigin="anonymous"></script>

@@ -83,6 +83,20 @@ async function appendPost (post) {
   timeline.appendChild(postBlock)
 }
 
+async function showPostDialog () {
+  document.querySelector('#post-dialog').style.display = 'flex'
+  document.querySelector('body').classList.add('modal-opened')
+}
+
+async function closePostDialog () {
+  document.querySelector('#post-dialog').style.display = 'none'
+  document.querySelector('body').classList.remove('modal-opened')
+}
+
+async function createPost () {
+
+}
+
 async function startApp () {
   const rpcUrl = 'https://mainnet.infura.io/v3/86955966e8f84fe2be3f95293a27aefe'
 
@@ -99,6 +113,13 @@ async function startApp () {
     if (document.documentElement.scrollHeight - event.pageY < document.documentElement.clientHeight * 2) {
       window.pageShouldLoad = true
     }
+  })
+
+  document.querySelector('#show-post-dialog').addEventListener('click', showPostDialog)
+  document.querySelector('#close-post-dialog').addEventListener('click', closePostDialog)
+  document.querySelector('#post-dialog').addEventListener('click', closePostDialog)
+  document.querySelector('#post-dialog .popup').addEventListener('click', function (event) {
+    event.stopPropagation()
   })
 }
 
