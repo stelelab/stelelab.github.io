@@ -47,6 +47,19 @@ window._xpost.loadPageWithIdx = async function (idx) {
   })
 }
 
+window._xpost.loadPageWithUserAddress = async function (address) {
+  window._xpost.Post.getPastEvents('Posted', {
+    fromBlock: 8192055,
+    filter: {
+      creator: [address]
+    }
+  }).then(async function (posts) {
+    for (let i = posts.length - 1; i >= 0; i--) {
+      await window._xpost.appendPost(posts[i])
+    }
+  })
+}
+
 window._xpost.loadPage = async function (lastIdx, pageSize) {
   let postIdxList = []
   for (let i = 0; i < pageSize && lastIdx - i >= 0; i++) {
@@ -76,7 +89,7 @@ window._xpost.appendPost = async function (post) {
   let postNumberWrap = document.createElement('a')
   let postNumber = document.createElement('span')
   postNumber.classList.add('number')
-  postNumber.textContent = `#${post.returnValues.postIdx}`
+  postNumber.textContent = `#${post.returnValues.postIdx} `
   postNumberWrap.href = `${window.location.protocol}//${window.location.host}/p#${post.returnValues.postIdx}`
   postNumberWrap.appendChild(postNumber)
 
