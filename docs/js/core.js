@@ -20,6 +20,9 @@ window._xpost.getUsername = async function (address) {
 
 window._xpost.startLoadingCheck = async function startLoadingCheck (postIdx) {
   const pageSize = 10
+  if (typeof postIdx === 'undefined') {
+      postIdx = await window._xpost.getPostIdx()
+  }
 
   if (window._xpost.pageShouldLoad) {
     if (postIdx >= 0) {
@@ -28,7 +31,20 @@ window._xpost.startLoadingCheck = async function startLoadingCheck (postIdx) {
     }
     window._xpost.pageShouldLoad = false
   }
-  setTimeout(window._xpost.startLoadingCheck, 100)
+  setTimeout(function () {window._xpost.startLoadingCheck(postIdx)}, 100)
+}
+
+window._xpost.loadPageWithIdx = async function (idx) {
+  window._xpost.Post.getPastEvents('Posted', {
+    fromBlock: 8192055,
+    filter: {
+      postIdx: [idx]
+    }
+  }).then(async function (posts) {
+    for (let i = posts.length - 1; i >= 0; i--) {
+      await window._xpost.appendPost(posts[i])
+    }
+  })
 }
 
 window._xpost.loadPage = async function (lastIdx, pageSize) {
