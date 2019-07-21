@@ -3,7 +3,8 @@ window._xpost.pageAppStart = async function () {
   window._xpost.startLoadingCheck()
 
   window.addEventListener('scroll', async function (event) {
-    if (document.documentElement.scrollHeight - event.pageY < document.documentElement.clientHeight * 2) {
+    let scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
+    if (document.documentElement.scrollHeight - scrollTop < document.documentElement.clientHeight * 2) {
       window._xpost.pageShouldLoad = true
     }
   })

@@ -114,3 +114,6 @@ a:hover {
 #post-timeline .post .post-info .block-height {
   color: #999999;
 }
+#post-timeline .post .post-content {
+  line-height: 1.5em;
+}
