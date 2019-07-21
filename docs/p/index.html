@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>XPost</title>
+    <!-- <link rel="icon" href="/img/logo.png"> -->
+
+    <meta property="og:title" content="XPOST.app - Speech freedom in blockchain">
+  	<meta property="og:site_name" content="xpost.app">
+  	<meta property="og:type" content="website">
+  	<meta property="og:url" content="https://xpost.app/">
+  	<!-- <meta property="og:image" content="https://xpost.app/img/logo.png"> -->
+  	<meta property="og:description" content="XPOST is a project for speech freedom in blockchain">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="xpost.app">
+    <meta name="author" content="xpostlab">
+
+    <link rel="stylesheet" href="/css/reset.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+  </head>
+  <body>
+    <div id="post-dialog">
+      <div class="popup">
+        <div class="header">
+          <button type="button" id="close-post-dialog">X</button>
+          <button type="button" id="create-post">Create</button>
+        </div>
+        <div class="content">
+          <textarea id="post-content"></textarea>
+        </div>
+      </div>
+    </div>
+    <div id="nav-bar">
+      <button type="button" name="button" id="show-post-dialog">Create Post</button>
+      <span>XPost V0.0.7</span>
+    </div>
+    <div id="post-timeline"></div>
+  </body>
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js" integrity="sha384-ohHihtNCeV+nANVRC/pjmE/UTXjBH4DhrTT0hBMYOaI1AXxaKUg7apjcpJQTKIf6" crossorigin="anonymous"></script>
+  <script src="/js/core.js"></script>
+  <script src="/js/post.js"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-60364521-7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || []
+    function gtag(){dataLayer.push(arguments)}
+    gtag('js', new Date())
+    gtag('config', 'UA-60364521-7')
+  </script>
+</html>
