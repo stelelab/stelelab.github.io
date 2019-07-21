@@ -24,7 +24,6 @@ window._xpost.getAddress = async function (username) {
   })
 }
 
-
 window._xpost.startLoadingCheck = async function startLoadingCheck (postIdx) {
   const pageSize = 10
   if (typeof postIdx === 'undefined') {
