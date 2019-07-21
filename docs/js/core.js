@@ -18,6 +18,13 @@ window._xpost.getUsername = async function (address) {
   })
 }
 
+window._xpost.getAddress = async function (username) {
+  return window._xpost.Username.methods.owner(web3.utils.fromAscii(username)).call().then(function (result) {
+    return result
+  })
+}
+
+
 window._xpost.startLoadingCheck = async function startLoadingCheck (postIdx) {
   const pageSize = 10
   if (typeof postIdx === 'undefined') {
