@@ -1,3 +1,3 @@
 # XPost
 
-Speech Freedom in blockchain
+Speech freedom in blockchain
