@@ -51,7 +51,7 @@ textarea::selection {
   position: relative;
   top: 5%;
   background-color: white;
-  width: 600px;
+  width: 640px;
   max-width: 100vw;
   height: 260px;
   border-radius: 10px;
@@ -75,7 +75,7 @@ textarea::selection {
 }
 #post-timeline {
   padding-top: 30px;
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
 }
 #post-timeline .post {
