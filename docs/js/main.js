@@ -10,7 +10,7 @@ async function getUsername (address) {
   if (address in usernameCache) {
     return usernameCache[address]
   }
-  return window.Username.methods.usernames(address).call().then(function (result) {
+  return window.Username.methods.username(address).call().then(function (result) {
     let username = window.web3.utils.toAscii(result.replace(/0+$/g, ''))
     usernameCache[address] = username
     return username
@@ -24,7 +24,7 @@ async function loadPage (lastIdx, pageSize) {
   }
 
   window.Post.getPastEvents('Posted', {
-    fromBlock: 8179906,
+    fromBlock: 8192055,
     filter: {
       postIdx: postIdxList
     }
@@ -75,8 +75,8 @@ async function startApp () {
   const pageSize = 10
 
   window.web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl))
-  window.Post = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[],"name":"postIdx","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"data","type":"string"}],"name":"Post","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"postIdx","type":"uint256"},{"indexed":true,"name":"creator","type":"address"},{"indexed":false,"name":"data","type":"string"}],"name":"Posted","type":"event"}]`), '0x8c5c4B00f4BBD5Bc664A3591c6B4A7a4bB893FF3')
-  window.Username = new window.web3.eth.Contract(JSON.parse(`[{"constant":false,"inputs":[{"name":"_username","type":"bytes32"}],"name":"Set","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"usernameUsed","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"usernames","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"user","type":"address"},{"indexed":false,"name":"username","type":"bytes32"}],"name":"UsernameSet","type":"event"}]`), '0x08647cf047537ca69cA7D73Dcd6697ab9d32DABb')
+  window.Post = new window.web3.eth.Contract(JSON.parse(`[{"constant":false,"inputs":[{"name":"data","type":"string"}],"name":"Create","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"postIdx","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"postIdx","type":"uint256"},{"indexed":true,"name":"creator","type":"address"},{"indexed":false,"name":"data","type":"string"}],"name":"Posted","type":"event"}]`), '0xEbfc4A31F0C1a8002398AE5601bE27c6a7ed35B7')
+  window.Username = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"username","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_username","type":"bytes32"}],"name":"Update","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"used","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"user","type":"address"},{"indexed":false,"name":"username","type":"bytes32"}],"name":"Updated","type":"event"}]`), '0xf35974226f5A7464D1B39AF1c11a3e2109e7C694')
 
   let postIdx = await getPostIdx()
 
