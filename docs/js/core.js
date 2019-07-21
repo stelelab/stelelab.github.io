@@ -40,7 +40,7 @@ window._xpost.startLoadingCheck = async function startLoadingCheck (postIdx) {
   setTimeout(function () {window._xpost.startLoadingCheck(postIdx)}, 100)
 }
 
-window._xpost.loadPageWithIdx = async function (idx) {
+window._xpost.loadWithIdx = async function (idx) {
   window._xpost.Post.getPastEvents('Posted', {
     fromBlock: 8192055,
     filter: {
@@ -96,7 +96,7 @@ window._xpost.appendPost = async function (post) {
   let postNumber = document.createElement('span')
   postNumber.classList.add('number')
   postNumber.textContent = `#${post.returnValues.postIdx} `
-  postNumberWrap.href = `${window.location.protocol}//${window.location.host}/p#${postNumber.textContent}`
+  postNumberWrap.href = `${window.location.protocol}//${window.location.host}/p${postNumber.textContent}`
   postNumberWrap.appendChild(postNumber)
 
   let postCreatorWrap = document.createElement('a')
