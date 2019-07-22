@@ -42,7 +42,7 @@ window._stele.startLoadingCheck = async function startLoadingCheck (postIdx) {
 }
 
 window._stele.loadWithIdx = async function (idx) {
-  window._stele.Post.getPastEvents('Posted', {
+  return window._stele.Post.getPastEvents('Posted', {
     fromBlock: 8192055,
     filter: {
       postIdx: [idx]
@@ -55,7 +55,7 @@ window._stele.loadWithIdx = async function (idx) {
 }
 
 window._stele.loadPageWithUserAddress = async function (address) {
-  window._stele.Post.getPastEvents('Posted', {
+  return window._stele.Post.getPastEvents('Posted', {
     fromBlock: 8192055,
     filter: {
       creator: [address]
@@ -73,7 +73,7 @@ window._stele.loadPage = async function (lastIdx, pageSize) {
     postIdxList.push(lastIdx - i)
   }
 
-  window._stele.Post.getPastEvents('Posted', {
+  return window._stele.Post.getPastEvents('Posted', {
     fromBlock: 8192055,
     filter: {
       postIdx: postIdxList
