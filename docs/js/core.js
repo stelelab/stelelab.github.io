@@ -153,6 +153,30 @@ window._stele.createPost = async function () {
   }
 }
 
+window._stele.setUsername = async function () {
+  let inputArea = document.querySelector('input[name=username]')
+  let accounts = await window.ethereum.enable()
+  if (window.hasMetamask && accounts.length > 0) {
+    await window._stele.Username.methods.Update(web3.utils.fromAscii(inputArea.value)).send({
+      from: accounts[0]
+    })
+  } else {
+    window.alert('Please install metamask plugin')
+  }
+}
+
+window._stele.setDescription = async function () {
+  let textArea = document.querySelector('textarea[name=description]')
+  let accounts = await window.ethereum.enable()
+  if (window.hasMetamask && accounts.length > 0) {
+    await window._stele.Description.methods.Update(web3.utils.fromAscii(textArea.value)).send({
+      from: accounts[0]
+    })
+  } else {
+    window.alert('Please install metamask plugin')
+  }
+}
+
 window._stele.startApp = async function () {
   const rpcUrl = 'https://mainnet.infura.io/v3/86955966e8f84fe2be3f95293a27aefe'
 
