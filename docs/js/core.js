@@ -97,7 +97,7 @@ window._stele.appendPost = async function (post) {
   let postNumber = document.createElement('span')
   postNumber.classList.add('number')
   postNumber.textContent = `#${post.returnValues.postIdx} `
-  postNumberWrap.href = `${window.location.protocol}//${window.location.host}/p${postNumber.textContent}`
+  postNumberWrap.href = `${window.location.protocol}//${window.location.host}/p?${postNumber.textContent}`
   postNumberWrap.appendChild(postNumber)
 
   let postCreatorWrap = document.createElement('a')
@@ -110,7 +110,7 @@ window._stele.appendPost = async function (post) {
   } else {
     postCreator.textContent = post.returnValues.creator
   }
-  postCreatorWrap.href = `${window.location.protocol}//${window.location.host}/u#${postCreator.textContent}`
+  postCreatorWrap.href = `${window.location.protocol}//${window.location.host}/u?#${postCreator.textContent}`
   postCreatorWrap.appendChild(postCreator)
 
   let postBlockHeightWrap = document.createElement('a')
