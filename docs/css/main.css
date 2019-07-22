@@ -69,6 +69,7 @@ a:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.5);
 }
 .navbar > .left {
   margin-left: 10px;
@@ -140,10 +141,12 @@ a:hover {
   margin-bottom: 60px;
 }
 #post-timeline .post {
-  margin: 10px;
+  padding: 10px 10px 40px 10px;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.5);
 }
 #post-timeline .post .post-info {
   margin: 10px;
+  line-height: 2em;
 }
 #post-timeline .post .post-info .number {
   font-weight: bold;
