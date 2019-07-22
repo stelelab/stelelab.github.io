@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+  <style>
+    #not-found {
+      display: none;
+      max-width: 100vw;
+      margin: 0 auto;
+      text-align: center;
+      font-family: System-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+      margin-top: 25vh;
+    }
+    button {
+      background-color: black;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0.4em 0.8em;
+      margin: 0.2em 0.5em;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #555;
+    }
+  </style>
+  <div id="not-found">
+    <h1>404 Not Found</h1>
+    <h2>Uh Oh</h2>
+    <a href="/"><button type="button" name="button">Back to Home</button></a>
+  </div>
   <script type="text/javascript">
     let path = window.location.pathname
     if (path.startsWith('/u/')) {
       window.location = `${window.location.protocol}//${window.location.host}/u/#${path.substr(3)}`
     } else if (path.startsWith('/p/')) {
       window.location = `${window.location.protocol}//${window.location.host}/p/#${path.substr(3)}`
+    } else {
+      document.querySelector('#not-found').style.display = 'block'
     }
   </script>
 </html>
