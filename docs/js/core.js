@@ -173,13 +173,13 @@ window._stele.startApp = async function () {
   window._stele.Description = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"description","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"data","type":"string"}],"name":"Update","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"descriptionIdx","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"descriptionIdx","type":"uint256"},{"indexed":true,"name":"creator","type":"address"},{"indexed":false,"name":"data","type":"string"}],"name":"Updated","type":"event"}]`), '0x56493824C70C429c155C7471BbC5ccb69562190b')
 
   // Initialize navbars
-  document.querySelector('#show-post-dialog').addEventListener('click', window._stele.showPostDialog)
-  document.querySelector('#close-post-dialog').addEventListener('click', window._stele.closePostDialog)
+  document.querySelector('button[name="show-post-dialog"]').addEventListener('click', window._stele.showPostDialog)
+  document.querySelector('button[name="close-post-dialog"]').addEventListener('click', window._stele.closePostDialog)
   document.querySelector('#post-dialog').addEventListener('click', window._stele.closePostDialog)
   document.querySelector('#post-dialog .popup').addEventListener('click', function (event) {
     event.stopPropagation()
   })
-  document.querySelector('#create-post').addEventListener('click', window._stele.createPost)
+  document.querySelector('button[name="create-post"]').addEventListener('click', window._stele.createPost)
 
   window.dispatchEvent(new CustomEvent('coreLoaded'))
 }
