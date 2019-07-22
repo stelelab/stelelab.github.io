@@ -43,11 +43,13 @@ window.addEventListener('coreLoaded', async function () {
     document.querySelector('#user-information .description').textContent = description[0].returnValues.data
   }
 
-  let accounts = await window.ethereum.enable()
-  if (accounts[0].toLowerCase() === address.toLowerCase()) {
-    document.querySelector('#user-specific-region').style.display = 'block'
-    document.querySelector('button[name="set-username"]').addEventListener('click', window._stele.setUsername)
-    document.querySelector('button[name="set-description"]').addEventListener('click', window._stele.setDescription)
+  if (window.hasMetamask) {
+    let accounts = await window.ethereum.enable()
+    if (accounts[0].toLowerCase() === address.toLowerCase()) {
+      document.querySelector('#user-specific-region').style.display = 'block'
+      document.querySelector('button[name="set-username"]').addEventListener('click', window._stele.setUsername)
+      document.querySelector('button[name="set-description"]').addEventListener('click', window._stele.setDescription)
+    }
   }
 
   window._stele.loadPageWithUserAddress(address)
