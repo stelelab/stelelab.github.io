@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <script type="text/javascript">
+    let path = window.location.pathname
+    if (path.startsWith('/u/')) {
+      window.location = `${window.location.protocol}//${window.location.host}/u/#${path.substr(3)}`
+    } else if (path.startsWith('/p/')) {
+      window.location = `${window.location.protocol}//${window.location.host}/p/#${path.substr(3)}`
+    }
+  </script>
+</html>
