@@ -150,7 +150,7 @@ window._stele.appendPost = async function (post) {
   copyLinkButton.textContent = 'Copy Link'
   copyLinkButton.classList.add('lite')
   copyLinkButton.classList.add('copy-link')
-  copyLinkButton.addEventListener('click', function () { window._stele.copyToClipboard(postCreatorWrap.href) })
+  copyLinkButton.addEventListener('click', function () { window._stele.copyToClipboard(postNumberWrap.href) })
 
   let postFooter = document.createElement('div')
   postFooter.classList.add('post-footer')
