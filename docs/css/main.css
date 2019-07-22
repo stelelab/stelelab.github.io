@@ -129,6 +129,30 @@ a:hover {
   padding: 5px 10px;
   height: 200px;
 }
+#tooltip {
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  align-items: flex-end;
+}
+#tooltip .popup {
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  max-height: 100px;
+  max-width: 300px;
+  margin-bottom: 60px;
+  opacity: 0;
+}
+#tooltip .popup.show {
+  opacity: 1;
+}
 #user-not-found {
   font-size: 3em;
   margin-top: 3em;

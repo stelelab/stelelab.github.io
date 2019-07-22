@@ -1,5 +1,6 @@
 window._stele = {}
 window._stele.isWeb3Actioning = false
+window._stele.tooltipShowUntil = null
 window._stele.usernameCache = {}
 
 window._stele.copyToClipboard = async function (data) {
@@ -10,6 +11,19 @@ window._stele.copyToClipboard = async function (data) {
   node.select()
   document.execCommand('copy')
   document.body.removeChild(node)
+  window._stele.showToolTip('Copied!')
+}
+
+window._stele.showToolTip = async function (message) {
+  let popup = document.querySelector('#tooltip .popup')
+  popup.textContent = message
+  popup.classList.add('show')
+  window._stele.tooltipShowUntil = (new Date()).getTime() + 2500
+  setTimeout(function () {
+    if ((new Date()).getTime() >= window._stele.tooltipShowUntil) {
+      popup.classList.remove('show')
+    }
+  }, 3000)
 }
 
 window._stele.getPostCount = async function () {
