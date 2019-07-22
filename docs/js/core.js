@@ -250,7 +250,7 @@ window._stele.startApp = async function () {
   })
   document.querySelector('button[name="create-post"]').addEventListener('click', window._stele.createPost)
   document.querySelector('textarea[name="post-content"]').addEventListener('keydown', function (event) {
-    if (event.which == 27){
+    if (event.which === 27) {
       window._stele.closePostDialog()
     }
   })
