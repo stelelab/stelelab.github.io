@@ -4,17 +4,17 @@ window._stele.tooltipShowUntil = null
 window._stele.usernameCache = {}
 
 window._stele.copyToClipboard = async function (data) {
-  let node = document.createElement("textarea")
+  let node = document.createElement('textarea')
   node.textContent = data
   node.style.opacity = 0.0001
   document.body.appendChild(node)
   node.select()
   document.execCommand('copy')
   document.body.removeChild(node)
-  window._stele.showToolTip('Copied!', time=3000)
+  window._stele.showToolTip('Copied!', 3000)
 }
 
-window._stele.showToolTip = async function (message, time=5000) {
+window._stele.showToolTip = async function (message, time = 5000) {
   let popup = document.querySelector('#tooltip .popup')
   popup.textContent = message
   popup.classList.add('show')
