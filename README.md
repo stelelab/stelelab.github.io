@@ -1,3 +1,3 @@
-# XPost
+# Stele
 
-Speech freedom in blockchain
+Write in blockchain now and forever
