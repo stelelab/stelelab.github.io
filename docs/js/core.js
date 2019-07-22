@@ -2,6 +2,16 @@ window._stele = {}
 window._stele.isWeb3Actioning = false
 window._stele.usernameCache = {}
 
+window._stele.copyToClipboard = async function (data) {
+  let node = document.createElement("textarea")
+  node.textContent = data
+  node.style.opacity = 0.0001
+  document.body.appendChild(node)
+  node.select()
+  document.execCommand('copy')
+  document.body.removeChild(node)
+}
+
 window._stele.getPostCount = async function () {
   return window._stele.Post.methods.postIdx().call().then(function (result) {
     return result - 1
@@ -140,6 +150,7 @@ window._stele.appendPost = async function (post) {
   copyLinkButton.textContent = 'Copy Link'
   copyLinkButton.classList.add('lite')
   copyLinkButton.classList.add('copy-link')
+  copyLinkButton.addEventListener('click', function () { window._stele.copyToClipboard(postCreatorWrap.href) })
 
   let postFooter = document.createElement('div')
   postFooter.classList.add('post-footer')
