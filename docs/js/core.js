@@ -169,7 +169,7 @@ window._stele.setDescription = async function () {
   let textArea = document.querySelector('textarea[name=description]')
   let accounts = await window.ethereum.enable()
   if (window.hasMetamask && accounts.length > 0) {
-    await window._stele.Description.methods.Update(web3.utils.fromAscii(textArea.value)).send({
+    await window._stele.Description.methods.Update(textArea.value).send({
       from: accounts[0]
     })
   } else {

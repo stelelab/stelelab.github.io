@@ -29,6 +29,7 @@ window.addEventListener('coreLoaded', async function () {
     document.querySelector('#user-information .username').textContent = `@${username}`
   }
   document.querySelector('#user-information .address').textContent = address
+  document.querySelector('#user-information .address-link').href = `https://etherscan.io/address/${address}`
 
   // Load description
   let descriptionIdx = await window._stele.Description.methods.description(address).call()
