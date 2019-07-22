@@ -3,9 +3,9 @@ window.addEventListener('coreLoaded', async function () {
   let address, username
   if (hash.startsWith('0x')) {
     address = hash
-    username = await window._xpost.getUsername(hash)
+    username = await window._stele.getUsername(hash)
   } else {
-    address = await window._xpost.getAddress(hash)
+    address = await window._stele.getAddress(hash)
     if (address === '0x0000000000000000000000000000000000000000') {
       document.querySelector('#user-not-found').textContent = `User "${hash}" not exists`
       document.querySelector('#user-not-found').style.display = 'block'
@@ -20,8 +20,8 @@ window.addEventListener('coreLoaded', async function () {
   document.querySelector('#user-information .address').textContent = address
 
   // Load description
-  let descriptionIdx = await window._xpost.Description.methods.description(address).call()
-  let description = await window._xpost.Description.getPastEvents('Updated', {
+  let descriptionIdx = await window._stele.Description.methods.description(address).call()
+  let description = await window._stele.Description.getPastEvents('Updated', {
     fromBlock: 8194784,
     filter: {
       descriptionIdx: [descriptionIdx]
@@ -31,5 +31,5 @@ window.addEventListener('coreLoaded', async function () {
     document.querySelector('#user-information .description').textContent = description[0].returnValues.data
   }
 
-  window._xpost.loadPageWithUserAddress(address)
+  window._stele.loadPageWithUserAddress(address)
 })
