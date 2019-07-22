@@ -1,7 +1,10 @@
 window.addEventListener('coreLoaded', async function () {
   let hash = window.location.hash.replace('#', '')
   let address, username
+
+  // Checking address and username
   if (hash.startsWith('0x')) {
+    // TODO: Check address valid
     address = hash
     username = await window._stele.getUsername(hash)
   } else {
@@ -29,6 +32,11 @@ window.addEventListener('coreLoaded', async function () {
   })
   if (description.length > 0) {
     document.querySelector('#user-information .description').textContent = description[0].returnValues.data
+  }
+
+  let accounts = await window.ethereum.enable()
+  if (accounts[0].toLowerCase() === address.toLowerCase()) {
+    document.querySelector('#user-specific-region').style.display = 'block'
   }
 
   window._stele.loadPageWithUserAddress(address)
