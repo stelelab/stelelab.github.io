@@ -20,6 +20,10 @@ button {
 button:hover {
   background-color: #555;
 }
+button.disabled {
+  cursor: not-allowed;
+  background-color: #555;
+}
 input, textarea {
   background-color: #F6F6F6;
   font-size: 1rem;

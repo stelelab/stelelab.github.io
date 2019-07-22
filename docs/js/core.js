@@ -1,4 +1,5 @@
 window._stele = {}
+window._stele.isPosting = false
 window._stele.usernameCache = {}
 
 window._stele.getPostCount = async function () {
@@ -145,16 +146,26 @@ window._stele.closePostDialog = async function () {
 }
 
 window._stele.createPost = async function () {
-  let textArea = document.querySelector('textarea[name=post-content]')
-  let accounts = await window.ethereum.enable()
-  if (window.hasMetamask && accounts.length > 0) {
-    await window._stele.Post.methods.Create(textArea.value).send({
-      from: accounts[0]
-    })
-    // Clean text area after finish
-    textArea.value = ''
-  } else {
-    window.alert('Please install metamask plugin')
+  if (!window._stele.isPosting) {
+    let textArea = document.querySelector('textarea[name=post-content]')
+    let accounts = await window.ethereum.enable()
+    window._stele.isPosting = true
+    document.querySelector('button[name="create-post"]').classList.add('disabled')
+
+    if (window.hasMetamask && accounts.length > 0) {
+      window._stele.Post.methods.Create(textArea.value).send({
+        from: accounts[0]
+      }).on('transactionHash', function (result) {
+        window.alert('Post has already sent to blockchain, please wait for confirmation.')
+        textArea.value = ''
+      }).then(function (result) {
+        window.alert('Post has already published!')
+        window._stele.isPosting = false
+        document.querySelector('button[name="create-post"]').classList.remove('disabled')
+      })
+    } else {
+      window.alert('Please install metamask plugin')
+    }
   }
 }
 
