@@ -12,7 +12,7 @@ button {
   color: white;
   border: none;
   border-radius: 6px;
-  padding: 0.3em 0.7em;
+  padding: 0.4em 0.8em;
   margin: 0.2em 0.5em;
   font-size: 1em;
   cursor: pointer;
@@ -24,6 +24,8 @@ input, textarea {
   background-color: #F6F6F6;
   font-size: 1rem;
   padding: 10px;
+  border: 1px solid rgb(200, 200, 200);
+  border-radius: 10px;
 }
 textarea {
   box-sizing: border-box;
