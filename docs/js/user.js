@@ -3,18 +3,26 @@ window.addEventListener('coreLoaded', async function () {
   let address, username
 
   // Checking address and username
-  if (hash.startsWith('0x')) {
-    // TODO: Check address valid
-    address = hash
-    username = await window._stele.getUsername(hash)
-  } else {
-    address = await window._stele.getAddress(hash)
+  if (hash.startsWith('@')) {
+    username = hash.substr(1)
+    address = await window._stele.getAddress(username)
     if (address === '0x0000000000000000000000000000000000000000') {
       document.querySelector('#user-not-found').textContent = `User "${hash}" not exists`
       document.querySelector('#user-not-found').style.display = 'block'
       return
     }
-    username = hash
+  } else if (hash.startsWith('0x')) {
+    if (!web3.utils.isAddress(hash)) {
+      document.querySelector('#user-not-found').textContent = `Address "${hash}" is not a valid address`
+      document.querySelector('#user-not-found').style.display = 'block'
+      return
+    }
+    address = hash
+    username = await window._stele.getUsername(hash)
+  } else {
+    document.querySelector('#user-not-found').textContent = `"${hash}" is not a valid user`
+    document.querySelector('#user-not-found').style.display = 'block'
+    return
   }
 
   if (username.length > 0) {

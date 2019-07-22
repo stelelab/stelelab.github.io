@@ -103,7 +103,11 @@ window._stele.appendPost = async function (post) {
   let postCreator = document.createElement('span')
   let userName = await window._stele.getUsername(post.returnValues.creator)
   postCreator.classList.add('creator')
-  postCreator.textContent = userName || post.returnValues.creator
+  if (userName.length > 0) {
+    postCreator.textContent = '@' + userName
+  } else {
+    postCreator.textContent = post.returnValues.creator
+  }
   postCreatorWrap.href = `${window.location.protocol}//${window.location.host}/u#${postCreator.textContent}`
   postCreatorWrap.appendChild(postCreator)
 
