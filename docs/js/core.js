@@ -15,13 +15,13 @@ window._stele.copyToClipboard = async function (data) {
 }
 
 window._stele.showToolTip = async function (message, time = 5000) {
-  let popup = document.querySelector('#tooltip .popup')
-  popup.textContent = message
-  popup.classList.add('show')
+  let tooltip = document.querySelector('#tooltip')
+  tooltip.textContent = message
+  tooltip.classList.add('show')
   window._stele.tooltipShowUntil = (new Date()).getTime() + time
   setTimeout(function () {
     if ((new Date()).getTime() >= window._stele.tooltipShowUntil) {
-      popup.classList.remove('show')
+      tooltip.classList.remove('show')
     }
   }, time + 500)
 }

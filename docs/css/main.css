@@ -130,17 +130,8 @@ a:hover {
   height: 200px;
 }
 #tooltip {
-  top: 0;
-  left: 0;
   position: fixed;
-  display: flex;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  align-items: flex-end;
-}
-#tooltip .popup {
+  z-index: 1;
   background-color: black;
   color: white;
   border-radius: 10px;
@@ -150,8 +141,15 @@ a:hover {
   margin-bottom: 60px;
   opacity: 0;
   line-height: 1.3em;
+  left: 50%;
+  bottom: 0;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  transform: translateX(-50%);
 }
-#tooltip .popup.show {
+#tooltip.show {
   opacity: 1;
 }
 #user-not-found {
