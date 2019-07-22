@@ -21,33 +21,47 @@
   </head>
   <body>
     <div id="post-dialog">
-      <div class="popup">
+      <div class="popup container">
         <div class="header">
           <button type="button" name="close-post-dialog">X</button>
           <button type="button" name="create-post">Create</button>
         </div>
         <div class="content">
-          <textarea id="post-content"></textarea>
+          <textarea name="post-content"></textarea>
         </div>
       </div>
     </div>
-    <div id="nav-bar">
+    <div class="navbar">
       <div class="left">
-        <a href="/"><div>Home</div></a>
+        <a href="/"><div class="logo">Stele.io</div></a>
       </div>
       <div class="right">
         <button type="button" name="show-post-dialog">Create Post</button>
         <span>Stele V0.2.0</span>
       </div>
     </div>
-    <div id="nav-bar-padding"></div>
-    <div id="user-not-found"></div>
-    <div id="user-information">
-      <div class="username"></div>
-      <div class="address"></div>
-      <div class="description"></div>
+    <div class="navbar-padding"></div>
+    <div class="container">
+      <div id="user-not-found"></div>
+      <div id="user-information">
+        <div class="username"></div>
+        <div class="address"></div>
+        <div class="description"></div>
+      </div>
+      <div id="user-specific-region">
+        <div>
+          <h3>Username</h3>
+          <input type="text" name="username" placeholder="Type username...">
+          <button type="button" name="set-username">Update usernmae</button>
+        </div>
+        <div>
+          <h3>Description</h3>
+          <textarea name="description" placeholder="Type description..."></textarea>
+          <button type="button" name="set-description">Update description</button>
+        </div>
+      </div>
+      <div id="post-timeline"></div>
     </div>
-    <div id="post-timeline"></div>
   </body>
   <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js" integrity="sha384-ohHihtNCeV+nANVRC/pjmE/UTXjBH4DhrTT0hBMYOaI1AXxaKUg7apjcpJQTKIf6" crossorigin="anonymous"></script>
   <script src="/js/core.js"></script>

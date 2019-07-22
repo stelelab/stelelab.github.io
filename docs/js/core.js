@@ -1,7 +1,7 @@
 window._stele = {}
 window._stele.usernameCache = {}
 
-window._stele.getPostIdx = async function () {
+window._stele.getPostCount = async function () {
   return window._stele.Post.methods.postIdx().call().then(function (result) {
     return result - 1
   })
@@ -27,7 +27,7 @@ window._stele.getAddress = async function (username) {
 window._stele.startLoadingCheck = async function startLoadingCheck (postIdx) {
   const pageSize = 10
   if (typeof postIdx === 'undefined') {
-    postIdx = await window._stele.getPostIdx()
+    postIdx = await window._stele.getPostCount()
   }
 
   if (window._stele.pageShouldLoad) {
@@ -136,7 +136,7 @@ window._stele.closePostDialog = async function () {
 }
 
 window._stele.createPost = async function () {
-  let textArea = document.querySelector('#post-content')
+  let textArea = document.querySelector('textarea[name=post-content]')
   let accounts = await window.ethereum.enable()
   if (window.hasMetamask && accounts.length > 0) {
     await window._stele.Post.methods.Create(textArea.value).send({

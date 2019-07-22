@@ -20,8 +20,13 @@ button {
 button:hover {
   background-color: #555;
 }
-textarea::selection {
-  text-shadow: none;
+input, textarea {
+  background-color: #F6F6F6;
+}
+textarea {
+  box-sizing: border-box;
+  resize: none;
+  user-select: all;
 }
 a {
   color: black;
@@ -30,7 +35,13 @@ a {
 a:hover {
   color: #555;
 }
-#nav-bar {
+.container {
+  width: 640px;
+  max-width: 100vw;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.navbar {
   position: fixed;
   width: 100vw;
   margin: 0;
@@ -41,13 +52,17 @@ a:hover {
   justify-content: space-between;
   align-items: center;
 }
-#nav-bar .left {
+.navbar > .left {
   margin-left: 10px;
 }
-#nav-bar .right {
+.navbar > .right {
   margin-right: 10px;
 }
-#nav-bar-padding {
+.navbar .logo {
+  font-weight: bold;
+  font-size: 1.5em;
+}
+.navbar-padding {
   height: 50px;
 }
 #post-dialog {
@@ -66,8 +81,6 @@ a:hover {
   position: relative;
   top: 5%;
   background-color: white;
-  width: 640px;
-  max-width: 100vw;
   height: 260px;
   border-radius: 10px;
   padding: 10px;
@@ -84,9 +97,6 @@ a:hover {
 #post-dialog .popup .content textarea {
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  resize: none;
-  background-color: #EEE;
 }
 #user-not-found {
   font-size: 3em;
@@ -95,8 +105,6 @@ a:hover {
   display: none;
 }
 #user-information {
-  max-width: 640px;
-  margin: 0 auto;
   padding: 40px;
 }
 #user-information .username {
@@ -112,10 +120,8 @@ a:hover {
 #user-information .description {
   padding: 20px 0;
 }
-#post-timeline {
-  max-width: 640px;
-  margin: 0 auto;
-  overflow: hidden;
+#user-specific-region {
+  display: none;
 }
 #post-timeline .post {
   margin: 10px;
