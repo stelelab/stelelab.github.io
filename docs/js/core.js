@@ -86,13 +86,7 @@ window._stele.loadPage = async function (lastIdx, pageSize) {
 }
 
 window._stele.appendPost = async function (post) {
-  let timeline = document.querySelector('#post-timeline')
-  let postBlock = document.createElement('div')
-  postBlock.classList.add('post')
-
-  let postInfo = document.createElement('div')
-  postInfo.classList.add('post-info')
-
+  // Post header
   let postNumberWrap = document.createElement('a')
   let postNumber = document.createElement('span')
   postNumber.classList.add('number')
@@ -121,17 +115,46 @@ window._stele.appendPost = async function (post) {
   postBlockHeightWrap.target = '_blank'
   postBlockHeightWrap.appendChild(postBlockHeight)
 
-  postInfo.appendChild(postNumberWrap)
-  postInfo.appendChild(postCreatorWrap)
-  postInfo.appendChild(postBlockHeightWrap)
+  let postHeader = document.createElement('div')
+  postHeader.classList.add('post-info')
 
+  postHeader.appendChild(postNumberWrap)
+  postHeader.appendChild(postCreatorWrap)
+  postHeader.appendChild(postBlockHeightWrap)
+
+  // Post content
   let postContent = document.createElement('div')
   postContent.classList.add('post-content')
   postContent.textContent = post.returnValues.data
 
-  postBlock.appendChild(postInfo)
-  postBlock.appendChild(postContent)
+  // Post footer
+  let likeButton = document.createElement('button')
+  likeButton.textContent = 'Like'
+  likeButton.classList.add('lite')
 
+  let commentButton = document.createElement('button')
+  commentButton.textContent = 'Comment'
+  commentButton.classList.add('lite')
+
+  let copyLinkButton = document.createElement('button')
+  copyLinkButton.textContent = 'Copy Link'
+  copyLinkButton.classList.add('lite')
+  copyLinkButton.classList.add('copy-link')
+
+  let postFooter = document.createElement('div')
+  postFooter.classList.add('post-footer')
+  // postFooter.appendChild(likeButton)
+  // postFooter.appendChild(commentButton)
+  postFooter.appendChild(copyLinkButton)
+
+  // Combine to post
+  let postBlock = document.createElement('div')
+  postBlock.classList.add('post')
+  postBlock.appendChild(postHeader)
+  postBlock.appendChild(postContent)
+  postBlock.appendChild(postFooter)
+
+  let timeline = document.querySelector('#post-timeline')
   timeline.appendChild(postBlock)
 }
 
