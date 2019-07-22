@@ -205,8 +205,9 @@ window._stele.createPost = async function () {
       window._stele.Post.methods.Create(textArea.value).send({
         from: accounts[0]
       }).on('transactionHash', function (result) {
-        window._stele.showToolTip('Post has already sent to blockchain, please wait for confirmation.')
         textArea.value = ''
+        window._stele.closePostDialog()
+        window._stele.showToolTip('Post has already sent to blockchain, please wait for confirmation.')
       }).then(function (result) {
         window._stele.showToolTip('Post has already published!')
         window._stele.isWeb3Actioning = false

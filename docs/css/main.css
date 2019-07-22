@@ -149,6 +149,7 @@ a:hover {
   max-width: 300px;
   margin-bottom: 60px;
   opacity: 0;
+  line-height: 1.3em;
 }
 #tooltip .popup.show {
   opacity: 1;
