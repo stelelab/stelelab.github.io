@@ -11,19 +11,19 @@ window._stele.copyToClipboard = async function (data) {
   node.select()
   document.execCommand('copy')
   document.body.removeChild(node)
-  window._stele.showToolTip('Copied!')
+  window._stele.showToolTip('Copied!', time=3000)
 }
 
-window._stele.showToolTip = async function (message) {
+window._stele.showToolTip = async function (message, time=5000) {
   let popup = document.querySelector('#tooltip .popup')
   popup.textContent = message
   popup.classList.add('show')
-  window._stele.tooltipShowUntil = (new Date()).getTime() + 2500
+  window._stele.tooltipShowUntil = (new Date()).getTime() + time
   setTimeout(function () {
     if ((new Date()).getTime() >= window._stele.tooltipShowUntil) {
       popup.classList.remove('show')
     }
-  }, 3000)
+  }, time + 500)
 }
 
 window._stele.getPostCount = async function () {
@@ -205,15 +205,15 @@ window._stele.createPost = async function () {
       window._stele.Post.methods.Create(textArea.value).send({
         from: accounts[0]
       }).on('transactionHash', function (result) {
-        window.alert('Post has already sent to blockchain, please wait for confirmation.')
+        window._stele.showToolTip('Post has already sent to blockchain, please wait for confirmation.')
         textArea.value = ''
       }).then(function (result) {
-        window.alert('Post has already published!')
+        window._stele.showToolTip('Post has already published!')
         window._stele.isWeb3Actioning = false
         document.querySelector('button.web3-action').classList.remove('disabled')
       })
     } else {
-      window.alert('Please install metamask plugin')
+      window._stele.showToolTip('Please install metamask plugin')
     }
   }
 }
@@ -230,14 +230,14 @@ window._stele.setUsername = async function () {
       window._stele.Username.methods.Update(web3.utils.fromAscii(inputArea.value)).send({
         from: accounts[0]
       }).on('transactionHash', function (result) {
-        window.alert('Username has already sent to blockchain, please wait for confirmation.')
+        window._stele.showToolTip('Username has already sent to blockchain, please wait for confirmation.')
       }).then(function (result) {
-        window.alert('Username has already updated!')
+        window._stele.showToolTip('Username has already updated!')
         window._stele.isWeb3Actioning = false
         document.querySelector('button.web3-action').classList.remove('disabled')
       })
     } else {
-      window.alert('Please install metamask plugin')
+      window._stele.showToolTip('Please install metamask plugin')
     }
   }
 }
@@ -254,14 +254,14 @@ window._stele.setDescription = async function () {
       window._stele.Description.methods.Update(textArea.value).send({
         from: accounts[0]
       }).on('transactionHash', function (result) {
-        window.alert('Desctiption has already sent to blockchain, please wait for confirmation.')
+        window._stele.showToolTip('Desctiption has already sent to blockchain, please wait for confirmation.')
       }).then(function (result) {
-        window.alert('Desctiption has already updated!')
+        window._stele.showToolTip('Desctiption has already updated!')
         window._stele.isWeb3Actioning = false
         document.querySelector('button.web3-action').classList.remove('disabled')
       })
     } else {
-      window.alert('Please install metamask plugin')
+      window._stele.showToolTip('Please install metamask plugin')
     }
   }
 }
