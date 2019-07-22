@@ -1,5 +1,5 @@
 window._stele = {}
-window._stele.isPosting = false
+window._stele.isWeb3Actioning = false
 window._stele.usernameCache = {}
 
 window._stele.getPostCount = async function () {
@@ -146,11 +146,12 @@ window._stele.closePostDialog = async function () {
 }
 
 window._stele.createPost = async function () {
-  if (!window._stele.isPosting) {
+  if (!window._stele.isWeb3Actioning) {
     let textArea = document.querySelector('textarea[name=post-content]')
     let accounts = await window.ethereum.enable()
-    window._stele.isPosting = true
-    document.querySelector('button[name="create-post"]').classList.add('disabled')
+
+    window._stele.isWeb3Actioning = true
+    document.querySelector('button.web3-action').classList.add('disabled')
 
     if (window.hasMetamask && accounts.length > 0) {
       window._stele.Post.methods.Create(textArea.value).send({
@@ -160,8 +161,8 @@ window._stele.createPost = async function () {
         textArea.value = ''
       }).then(function (result) {
         window.alert('Post has already published!')
-        window._stele.isPosting = false
-        document.querySelector('button[name="create-post"]').classList.remove('disabled')
+        window._stele.isWeb3Actioning = false
+        document.querySelector('button.web3-action').classList.remove('disabled')
       })
     } else {
       window.alert('Please install metamask plugin')
@@ -170,26 +171,50 @@ window._stele.createPost = async function () {
 }
 
 window._stele.setUsername = async function () {
-  let inputArea = document.querySelector('input[name=username]')
-  let accounts = await window.ethereum.enable()
-  if (window.hasMetamask && accounts.length > 0) {
-    await window._stele.Username.methods.Update(web3.utils.fromAscii(inputArea.value)).send({
-      from: accounts[0]
-    })
-  } else {
-    window.alert('Please install metamask plugin')
+  if (!window._stele.isWeb3Actioning) {
+    let inputArea = document.querySelector('input[name=username]')
+    let accounts = await window.ethereum.enable()
+
+    window._stele.isWeb3Actioning = true
+    document.querySelector('button.web3-action').classList.add('disabled')
+
+    if (window.hasMetamask && accounts.length > 0) {
+      window._stele.Username.methods.Update(web3.utils.fromAscii(inputArea.value)).send({
+        from: accounts[0]
+      }).on('transactionHash', function (result) {
+        window.alert('Username has already sent to blockchain, please wait for confirmation.')
+      }).then(function (result) {
+        window.alert('Username has already updated!')
+        window._stele.isWeb3Actioning = false
+        document.querySelector('button.web3-action').classList.remove('disabled')
+      })
+    } else {
+      window.alert('Please install metamask plugin')
+    }
   }
 }
 
 window._stele.setDescription = async function () {
-  let textArea = document.querySelector('textarea[name=description]')
-  let accounts = await window.ethereum.enable()
-  if (window.hasMetamask && accounts.length > 0) {
-    await window._stele.Description.methods.Update(textArea.value).send({
-      from: accounts[0]
-    })
-  } else {
-    window.alert('Please install metamask plugin')
+  if (!window._stele.isWeb3Actioning) {
+    let textArea = document.querySelector('textarea[name=description]')
+    let accounts = await window.ethereum.enable()
+
+    window._stele.isWeb3Actioning = true
+    document.querySelector('button.web3-action').classList.add('disabled')
+
+    if (window.hasMetamask && accounts.length > 0) {
+      window._stele.Description.methods.Update(textArea.value).send({
+        from: accounts[0]
+      }).on('transactionHash', function (result) {
+        window.alert('Desctiption has already sent to blockchain, please wait for confirmation.')
+      }).then(function (result) {
+        window.alert('Desctiption has already updated!')
+        window._stele.isWeb3Actioning = false
+        document.querySelector('button.web3-action').classList.remove('disabled')
+      })
+    } else {
+      window.alert('Please install metamask plugin')
+    }
   }
 }
 
