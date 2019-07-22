@@ -111,13 +111,17 @@ window._stele.appendPost = async function (post) {
   postCreatorWrap.href = `${window.location.protocol}//${window.location.host}/u#${postCreator.textContent}`
   postCreatorWrap.appendChild(postCreator)
 
+  let postBlockHeightWrap = document.createElement('a')
   let postBlockHeight = document.createElement('span')
   postBlockHeight.classList.add('block-height')
   postBlockHeight.textContent = `- ${post.blockNumber}`
+  postBlockHeightWrap.href = `https://etherscan.io/tx/${post.transactionHash}`
+  postBlockHeightWrap.target = '_blank'
+  postBlockHeightWrap.appendChild(postBlockHeight)
 
   postInfo.appendChild(postNumberWrap)
   postInfo.appendChild(postCreatorWrap)
-  postInfo.appendChild(postBlockHeight)
+  postInfo.appendChild(postBlockHeightWrap)
 
   let postContent = document.createElement('div')
   postContent.classList.add('post-content')
