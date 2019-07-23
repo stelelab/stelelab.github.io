@@ -291,6 +291,7 @@ window._stele.startApp = async function () {
   }
   if (!window.hasMetamask) {
     window.web3 = new Web3(new Web3.providers.HttpProvider(rpcUrl))
+    document.querySelector('button[name="show-post-dialog"]').style.display = 'none'
   }
 
   // Initialize web3 modules
