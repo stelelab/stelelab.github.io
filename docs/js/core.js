@@ -263,6 +263,16 @@ window._stele.setUsername = async function () {
       }).then(function (result) {
         window._stele.showToolTip('Username has already updated!')
         window._stele.enableWeb3Action()
+      }).catch(function (error) {
+        let message
+        if (error.message.includes('User denied transaction signature')) {
+          message = 'Update canceled!'
+        } else {
+          message = 'Username set failed, please reload the page or check your metamask.'
+        }
+        window._stele.closePostDialog()
+        window._stele.showToolTip(message)
+        window._stele.enableWeb3Action()
       })
     } else {
       window._stele.showToolTip('Please install metamask plugin')
@@ -284,6 +294,16 @@ window._stele.setDescription = async function () {
         window._stele.showToolTip('Desctiption has already sent to the blockchain, please wait for confirmation.')
       }).then(function (result) {
         window._stele.showToolTip('Desctiption has already updated!')
+        window._stele.enableWeb3Action()
+      }).catch(function (error) {
+        let message
+        if (error.message.includes('User denied transaction signature')) {
+          message = 'Update canceled!'
+        } else {
+          message = 'Description set failed, please reload the page or check your metamask.'
+        }
+        window._stele.closePostDialog()
+        window._stele.showToolTip(message)
         window._stele.enableWeb3Action()
       })
     } else {
