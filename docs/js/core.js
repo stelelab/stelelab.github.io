@@ -47,7 +47,7 @@ window._stele.showNotFound = async function (message) {
 
 window._stele.getPostCount = async function () {
   return window._stele.Post.methods.postIdx().call().then(function (result) {
-    return result - 1
+    return parseInt(result) - 1
   })
 }
 
@@ -63,8 +63,16 @@ window._stele.getUsername = async function (address) {
 }
 
 window._stele.getAddress = async function (username) {
-  return window._stele.Username.methods.owner(web3.utils.fromAscii(username)).call().then(function (result) {
-    return result
+  return window._stele.Username.methods.owner(web3.utils.fromAscii(username)).call()
+}
+
+window._stele.getPostLikeCounts = async function (postIdxList) {
+  return window._stele.GetMultiPostLikeCount.methods.Get(postIdxList).call().then(function (counts) {
+    let countMap = {}
+    for (let i = 0; i < postIdxList.length; i++) {
+      countMap[postIdxList[i]] = parseInt(counts[i])
+    }
+    return countMap
   })
 }
 
@@ -124,13 +132,16 @@ window._stele.loadPage = async function (lastIdx, pageSize) {
       postIdx: postIdxList
     }
   }).then(async function (posts) {
+    let likeCounts = await window._stele.getPostLikeCounts(postIdxList)
     for (let i = posts.length - 1; i >= 0; i--) {
-      await window._stele.appendPost(posts[i])
+      let postIdx = parseInt(posts[i].returnValues.postIdx)
+      let context = {likeCount: likeCounts[postIdx]}
+      await window._stele.appendPost(posts[i], context)
     }
   })
 }
 
-window._stele.appendPost = async function (post) {
+window._stele.appendPost = async function (post, context) {
   // Post header
   let postNumberWrap = document.createElement('a')
   let postNumber = document.createElement('span')
@@ -174,7 +185,8 @@ window._stele.appendPost = async function (post) {
 
   // Post footer
   let likeButton = document.createElement('button')
-  likeButton.textContent = 'Like'
+  let postLikeCount = 0
+  likeButton.textContent = `Like ${context.likeCount}`
   likeButton.classList.add('lite')
 
   let commentButton = document.createElement('button')
@@ -189,7 +201,7 @@ window._stele.appendPost = async function (post) {
 
   let postFooter = document.createElement('div')
   postFooter.classList.add('post-footer')
-  // postFooter.appendChild(likeButton)
+  postFooter.appendChild(likeButton)
   // postFooter.appendChild(commentButton)
   postFooter.appendChild(copyLinkButton)
 
@@ -308,9 +320,15 @@ window._stele.startApp = async function () {
   }
 
   // Initialize web3 modules
+  // web3 model contracts
   window._stele.Post = new window.web3.eth.Contract(JSON.parse(`[{"constant":false,"inputs":[{"name":"data","type":"string"}],"name":"Create","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"postIdx","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"postIdx","type":"uint256"},{"indexed":true,"name":"creator","type":"address"},{"indexed":false,"name":"data","type":"string"}],"name":"Posted","type":"event"}]`), '0xEbfc4A31F0C1a8002398AE5601bE27c6a7ed35B7')
   window._stele.Username = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"username","outputs":[{"name":"","type":"bytes32"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_username","type":"bytes32"}],"name":"Update","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"user","type":"address"},{"indexed":true,"name":"username","type":"bytes32"}],"name":"Updated","type":"event"}]`), '0x2581eDAf8Dd85bDE2a33AB9Ac5b190E7C7b0A1Ad')
   window._stele.Description = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"description","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"data","type":"string"}],"name":"Update","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"descriptionIdx","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"descriptionIdx","type":"uint256"},{"indexed":true,"name":"creator","type":"address"},{"indexed":false,"name":"data","type":"string"}],"name":"Updated","type":"event"}]`), '0x56493824C70C429c155C7471BbC5ccb69562190b')
+  window._stele.PostLike = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"liked","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"postIdx","type":"uint256"}],"name":"Like","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"postIdx","type":"uint256"}],"name":"Unlike","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"postLikeCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"postIdx","type":"uint256"},{"indexed":true,"name":"user","type":"address"}],"name":"Liked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"postIdx","type":"uint256"},{"indexed":true,"name":"user","type":"address"}],"name":"Unliked","type":"event"}]`), '0x2E8c1E33e82E2A5b93076f32Aa5EFE3dFaAa1676')
+
+  // web3 method contracts
+  window._stele.GetMultiPostLikeCount = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"postIdxList","type":"uint256[]"}],"name":"Get","outputs":[{"name":"counts","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"}]`), '0x9a4d5ec269fd4A4714915B3bc1f3A37034010Cea')
+
 
   // Initialize navbars
   document.querySelector('button[name="show-post-dialog"]').addEventListener('click', window._stele.showPostDialog)
