@@ -194,6 +194,7 @@ window._stele.appendPost = async function (post, context) {
   let likeButton = document.createElement('button')
   likeButton.textContent = `Like ${context.likeCount}`
   likeButton.classList.add('lite')
+  likeButton.addEventListener('click', function () { window._stele.likePost(post.returnValues.postIdx) })
 
   let commentButton = document.createElement('button')
   commentButton.textContent = 'Comment'
@@ -303,6 +304,19 @@ window._stele.setDescription = async function () {
     finished: 'Desctiption has already updated!',
     canceled: 'Update canceled!',
     error: 'Description set failed. Please reload the page or check your metamask.'
+  })
+}
+
+window._stele.likePost = async function (postIdx) {
+  let executeFunc = function () {
+    return window._stele.PostLike.methods.Like(postIdx)
+  }
+  let sentCallBackFunc = function () {}
+  window._stele.callWeb3Cation(executeFunc, sentCallBackFunc, {
+    sent: 'Like has already sent to the blockchain. Please wait for confirmation.',
+    finished: 'Like has already published!',
+    canceled: 'Like canceled!',
+    error: 'Like sent failed. Please reload the page or check your metamask.'
   })
 }
 
