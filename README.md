@@ -1,3 +1,3 @@
 # Stele
 
-Write in blockchain now and forever
+Write in blockchain now and forever.

@@ -255,10 +255,10 @@ window._stele.createPost = async function () {
     textArea.value = ''
   }
   window._stele.callWeb3Cation(executeFunc, sentCallBackFunc, {
-    sent: 'Post has already sent to the blockchain, please wait for confirmation.',
+    sent: 'Post has already sent to the blockchain. Please wait for confirmation.',
     finished: 'Post has already published!',
     canceled: 'Post canceled!',
-    error: 'Post sent failed, please reload the page or check your metamask.'
+    error: 'Post sent failed. Please reload the page or check your metamask.'
   })
 }
 
@@ -268,10 +268,10 @@ window._stele.setUsername = async function () {
     return window._stele.Username.methods.Update(web3.utils.fromAscii(inputArea.value))
   }
   window._stele.callWeb3Cation(executeFunc, function () {}, {
-    sent: 'Username has already sent to the blockchain, please wait for confirmation.',
+    sent: 'Username has already sent to the blockchain. Please wait for confirmation.',
     finished: 'Username has already updated!',
     canceled: 'Update canceled!',
-    error: 'Username set failed, please reload the page or check your metamask.'
+    error: 'Username set failed. Please reload the page or check your metamask.'
   })
 }
 
@@ -281,10 +281,10 @@ window._stele.setDescription = async function () {
     return window._stele.Description.methods.Update(textArea.value)
   }
   window._stele.callWeb3Cation(executeFunc, function () {}, {
-    sent: 'Desctiption has already sent to the blockchain, please wait for confirmation.',
+    sent: 'Desctiption has already sent to the blockchain. Please wait for confirmation.',
     finished: 'Desctiption has already updated!',
     canceled: 'Update canceled!',
-    error: 'Description set failed, please reload the page or check your metamask.'
+    error: 'Description set failed. Please reload the page or check your metamask.'
   })
 }
 
