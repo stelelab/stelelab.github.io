@@ -214,29 +214,27 @@ window._stele.closePostDialog = async function () {
   document.body.classList.remove('modal-opened')
 }
 
-window._stele.createPost = async function () {
+window._stele.callWeb3Cation = async function (executeFunc, sentCallBackFunc, messages) {
   if (!window._stele.isWeb3Actioning) {
-    let textArea = document.querySelector('textarea[name=post-content]')
     let accounts = await window.ethereum.enable()
-
     window._stele.disableWeb3Action()
 
     if (window.hasMetamask && accounts.length > 0) {
-      window._stele.Post.methods.Create(textArea.value).send({
+      executeFunc().send({
         from: accounts[0]
       }).on('transactionHash', function (result) {
-        textArea.value = ''
+        sentCallBackFunc()
         window._stele.closePostDialog()
-        window._stele.showToolTip('Post has already sent to the blockchain, please wait for confirmation.')
+        window._stele.showToolTip(messages.sent)
       }).then(function (result) {
-        window._stele.showToolTip('Post has already published!')
+        window._stele.showToolTip(messages.finished)
         window._stele.enableWeb3Action()
       }).catch(function (error) {
         let message
         if (error.message.includes('User denied transaction signature')) {
-          message = 'Post canceled!'
+          message = messages.canceled
         } else {
-          message = 'Post sent failed, please reload the page or check your metamask.'
+          message = messages.error
         }
         window._stele.closePostDialog()
         window._stele.showToolTip(message)
@@ -246,70 +244,48 @@ window._stele.createPost = async function () {
       window._stele.showToolTip('Please install metamask plugin')
     }
   }
+}
+
+window._stele.createPost = async function () {
+  let textArea = document.querySelector('textarea[name=post-content]')
+  let executeFunc = function () {
+    return window._stele.Post.methods.Create(textArea.value)
+  }
+  let sentCallBackFunc = function () {
+    textArea.value = ''
+  }
+  window._stele.callWeb3Cation(executeFunc, sentCallBackFunc, {
+    sent: 'Post has already sent to the blockchain, please wait for confirmation.',
+    finished: 'Post has already published!',
+    canceled: 'Post canceled!',
+    error: 'Post sent failed, please reload the page or check your metamask.'
+  })
 }
 
 window._stele.setUsername = async function () {
-  if (!window._stele.isWeb3Actioning) {
+  let executeFunc = function () {
     let inputArea = document.querySelector('input[name=username]')
-    let accounts = await window.ethereum.enable()
-
-    window._stele.enableWeb3Action()
-
-    if (window.hasMetamask && accounts.length > 0) {
-      window._stele.Username.methods.Update(web3.utils.fromAscii(inputArea.value)).send({
-        from: accounts[0]
-      }).on('transactionHash', function (result) {
-        window._stele.showToolTip('Username has already sent to the blockchain, please wait for confirmation.')
-      }).then(function (result) {
-        window._stele.showToolTip('Username has already updated!')
-        window._stele.enableWeb3Action()
-      }).catch(function (error) {
-        let message
-        if (error.message.includes('User denied transaction signature')) {
-          message = 'Update canceled!'
-        } else {
-          message = 'Username set failed, please reload the page or check your metamask.'
-        }
-        window._stele.closePostDialog()
-        window._stele.showToolTip(message)
-        window._stele.enableWeb3Action()
-      })
-    } else {
-      window._stele.showToolTip('Please install metamask plugin')
-    }
+    return window._stele.Username.methods.Update(web3.utils.fromAscii(inputArea.value))
   }
+  window._stele.callWeb3Cation(executeFunc, function () {}, {
+    sent: 'Username has already sent to the blockchain, please wait for confirmation.',
+    finished: 'Username has already updated!',
+    canceled: 'Update canceled!',
+    error: 'Username set failed, please reload the page or check your metamask.'
+  })
 }
 
 window._stele.setDescription = async function () {
-  if (!window._stele.isWeb3Actioning) {
+  let executeFunc = function () {
     let textArea = document.querySelector('textarea[name=description]')
-    let accounts = await window.ethereum.enable()
-
-    window._stele.enableWeb3Action()
-
-    if (window.hasMetamask && accounts.length > 0) {
-      window._stele.Description.methods.Update(textArea.value).send({
-        from: accounts[0]
-      }).on('transactionHash', function (result) {
-        window._stele.showToolTip('Desctiption has already sent to the blockchain, please wait for confirmation.')
-      }).then(function (result) {
-        window._stele.showToolTip('Desctiption has already updated!')
-        window._stele.enableWeb3Action()
-      }).catch(function (error) {
-        let message
-        if (error.message.includes('User denied transaction signature')) {
-          message = 'Update canceled!'
-        } else {
-          message = 'Description set failed, please reload the page or check your metamask.'
-        }
-        window._stele.closePostDialog()
-        window._stele.showToolTip(message)
-        window._stele.enableWeb3Action()
-      })
-    } else {
-      window._stele.showToolTip('Please install metamask plugin')
-    }
+    return window._stele.Description.methods.Update(textArea.value)
   }
+  window._stele.callWeb3Cation(executeFunc, function () {}, {
+    sent: 'Desctiption has already sent to the blockchain, please wait for confirmation.',
+    finished: 'Desctiption has already updated!',
+    canceled: 'Update canceled!',
+    error: 'Description set failed, please reload the page or check your metamask.'
+  })
 }
 
 window._stele.startApp = async function () {
