@@ -27,7 +27,7 @@ button.disabled {
 button.lite {
   background-color: white;
   color: rgb(90, 90, 90);
-  border: 1px solid rgb(220, 220, 220);
+  border: 1px solid rgb(230, 230, 230);
 }
 button.lite:hover {
   color: rgb(70, 70, 70);
@@ -37,7 +37,7 @@ input, textarea {
   background-color: #F6F6F6;
   font-size: 1rem;
   padding: 10px;
-  border: 1px solid rgb(200, 200, 200);
+  border: 1px solid rgb(230, 230, 230);
   border-radius: 10px;
 }
 textarea {
@@ -83,6 +83,9 @@ a.original:hover {
   margin: 0 auto;
   overflow: hidden;
 }
+.container > div {
+  padding: 10px;
+}
 .address {
   word-wrap: break-word;
 }
@@ -96,7 +99,7 @@ a.original:hover {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(200, 200, 200, 0.5);
+  border-bottom: 1px solid rgb(230, 230, 230);
 }
 .navbar > .left {
   margin-left: 10px;
@@ -191,8 +194,8 @@ a.original:hover {
   margin-bottom: 60px;
 }
 #post-timeline .post {
-  padding: 10px 10px 20px 10px;
-  border-bottom: 1px solid rgba(200, 200, 200, 0.5);
+  padding: 10px 0 20px 0;
+  border-bottom: 1px solid rgb(230, 230, 230);
 }
 #post-timeline .post .post-info {
   margin: 10px;
