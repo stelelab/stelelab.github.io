@@ -100,7 +100,8 @@ window._stele.loadWithIdx = async function (idx) {
     }
   }).then(async function (posts) {
     if (posts.length > 0) {
-      await window._stele.appendPost(posts[0])
+      let likeCounts = await window._stele.getPostLikeCounts([idx])
+      await window._stele.appendPost(posts[0], {likeCount: likeCounts[idx]})
     } else {
       window._stele.showNotFound(`Post ${idx} not exists!`)
     }
@@ -114,8 +115,14 @@ window._stele.loadPageWithUserAddress = async function (address) {
       creator: [address]
     }
   }).then(async function (posts) {
+    let postIdxList = []
+    for (let i = 0; i < posts.length; i++) {
+      postIdxList.push(parseInt(posts[i].returnValues.postIdx))
+    }
+    let likeCounts = await window._stele.getPostLikeCounts(postIdxList)
     for (let i = posts.length - 1; i >= 0; i--) {
-      await window._stele.appendPost(posts[i])
+      let postIdx = parseInt(posts[i].returnValues.postIdx)
+      await window._stele.appendPost(posts[i], {likeCount: likeCounts[postIdx]})
     }
   })
 }
