@@ -101,7 +101,7 @@ window._stele.loadWithIdx = async function (idx) {
   }).then(async function (posts) {
     if (posts.length > 0) {
       let likeCounts = await window._stele.getPostLikeCounts([idx])
-      await window._stele.appendPost(posts[0], {likeCount: likeCounts[idx]})
+      await window._stele.appendPost(posts[0], { likeCount: likeCounts[idx] })
     } else {
       window._stele.showNotFound(`Post ${idx} not exists!`)
     }
@@ -122,7 +122,7 @@ window._stele.loadPageWithUserAddress = async function (address) {
     let likeCounts = await window._stele.getPostLikeCounts(postIdxList)
     for (let i = posts.length - 1; i >= 0; i--) {
       let postIdx = parseInt(posts[i].returnValues.postIdx)
-      await window._stele.appendPost(posts[i], {likeCount: likeCounts[postIdx]})
+      await window._stele.appendPost(posts[i], { likeCount: likeCounts[postIdx] })
     }
   })
 }
@@ -142,7 +142,7 @@ window._stele.loadPage = async function (lastIdx, pageSize) {
     let likeCounts = await window._stele.getPostLikeCounts(postIdxList)
     for (let i = posts.length - 1; i >= 0; i--) {
       let postIdx = parseInt(posts[i].returnValues.postIdx)
-      let context = {likeCount: likeCounts[postIdx]}
+      let context = { likeCount: likeCounts[postIdx] }
       await window._stele.appendPost(posts[i], context)
     }
   })
@@ -192,7 +192,6 @@ window._stele.appendPost = async function (post, context) {
 
   // Post footer
   let likeButton = document.createElement('button')
-  let postLikeCount = 0
   likeButton.textContent = `Like ${context.likeCount}`
   likeButton.classList.add('lite')
 
@@ -335,7 +334,6 @@ window._stele.startApp = async function () {
 
   // web3 method contracts
   window._stele.GetMultiPostLikeCount = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"postIdxList","type":"uint256[]"}],"name":"Get","outputs":[{"name":"counts","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"}]`), '0x9a4d5ec269fd4A4714915B3bc1f3A37034010Cea')
-
 
   // Initialize navbars
   document.querySelector('button[name="show-post-dialog"]').addEventListener('click', window._stele.showPostDialog)
