@@ -40,6 +40,11 @@ window._stele.showToolTip = async function (message, time = 5000) {
   }, time + 500)
 }
 
+window._stele.showNotFound = async function (message) {
+  document.querySelector('#not-found .message').textContent = message
+  document.querySelector('#not-found').style.display = 'block'
+}
+
 window._stele.getPostCount = async function () {
   return window._stele.Post.methods.postIdx().call().then(function (result) {
     return result - 1
@@ -86,8 +91,10 @@ window._stele.loadWithIdx = async function (idx) {
       postIdx: [idx]
     }
   }).then(async function (posts) {
-    for (let i = posts.length - 1; i >= 0; i--) {
-      await window._stele.appendPost(posts[i])
+    if (posts.length > 0) {
+      await window._stele.appendPost(posts[0])
+    } else {
+      window._stele.showNotFound(`Post ${idx} not exists!`)
     }
   })
 }

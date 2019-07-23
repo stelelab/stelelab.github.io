@@ -7,21 +7,18 @@ window.addEventListener('coreLoaded', async function () {
     username = hash.substr(1)
     address = await window._stele.getAddress(username)
     if (address === '0x0000000000000000000000000000000000000000') {
-      document.querySelector('#user-not-found').textContent = `User "${hash}" not exists`
-      document.querySelector('#user-not-found').style.display = 'block'
+      window._stele.showNotFound(`User "${hash}" not exists`)
       return
     }
   } else if (hash.startsWith('0x')) {
     if (!web3.utils.isAddress(hash)) {
-      document.querySelector('#user-not-found').textContent = `Address "${hash}" is not a valid address`
-      document.querySelector('#user-not-found').style.display = 'block'
+      window._stele.showNotFound(`Address "${hash}" is not a valid address`)
       return
     }
     address = hash
     username = await window._stele.getUsername(hash)
   } else {
-    document.querySelector('#user-not-found').textContent = `"${hash}" is not a valid user`
-    document.querySelector('#user-not-found').style.display = 'block'
+    window._stele.showNotFound(`"${hash}" is not a valid user`)
     return
   }
 

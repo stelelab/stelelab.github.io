@@ -12,9 +12,9 @@ button {
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 0.4em 0.8em;
-  margin: 0.2em 0.5em;
-  font-size: 1em;
+  padding: 0.4rem 0.8rem;
+  margin: 0.2rem 0.5rem;
+  font-size: 1rem;
   cursor: pointer;
 }
 button:hover {
@@ -109,10 +109,10 @@ a.original:hover {
 }
 .navbar .logo {
   font-weight: bold;
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
 .navbar-padding {
-  height: 4em;
+  height: 4rem;
 }
 #post-dialog {
   top: 0;
@@ -154,7 +154,7 @@ a.original:hover {
   max-width: 300px;
   margin-bottom: 60px;
   opacity: 0;
-  line-height: 1.3em;
+  line-height: 1.3rem;
   left: 50%;
   bottom: 0;
   -webkit-transform: translateX(-50%);
@@ -166,23 +166,29 @@ a.original:hover {
 #tooltip.show {
   opacity: 1;
 }
-#user-not-found {
-  font-size: 3em;
-  margin-top: 3em;
+#not-found {
+  font-size: 3rem;
+  margin-top: 3rem;
   text-align: center;
   display: none;
+}
+#not-found h1 {
+  font-size: 2rem;
+}
+#not-found h2 {
+  font-size: 1.5rem;
 }
 #user-information {
   padding: 40px;
 }
 #user-information .username {
-  font-size: 3em;
+  font-size: 3rem;
   font-weight: bold;
   padding: 20px 0;
 }
 #user-information .address {
   padding: 20px 0;
-  font-size: 1.3em;
+  font-size: 1.3rem;
   color: #999;
 }
 #user-information .description {
@@ -190,7 +196,7 @@ a.original:hover {
 }
 #user-specific-region {
   display: none;
-  line-height: 2em;
+  line-height: 2rem;
   margin-bottom: 60px;
 }
 #post-timeline .post {
@@ -199,15 +205,15 @@ a.original:hover {
 }
 #post-timeline .post .post-info {
   margin: 10px;
-  line-height: 2em;
+  line-height: 2rem;
 }
 #post-timeline .post .post-info .number {
   font-weight: bold;
-  font-size: 2.5em;
-  padding-right: 0.5em;
+  font-size: 2.5rem;
+  padding-right: 0.5rem;
 }
 #post-timeline .post .post-info .creator {
-  padding-right: 0.5em;
+  padding-right: 0.5rem;
 }
 #post-timeline .post .post-info .block-height {
   color: #999999;
@@ -215,7 +221,7 @@ a.original:hover {
 #post-timeline .post .post-content {
   white-space: pre-wrap;
   word-wrap: break-word;
-  line-height: 1.5em;
+  line-height: 1.5rem;
 }
 #post-timeline .post .post-footer {
   margin-top: 25px;
