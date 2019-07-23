@@ -14,6 +14,20 @@ window._stele.copyToClipboard = async function (data) {
   window._stele.showToolTip('Copied!', 3000)
 }
 
+window._stele.enableWeb3Action = function () {
+  window._stele.isWeb3Actioning = false
+  document.querySelectorAll('button.web3-action').forEach(function (element) {
+    element.classList.remove('disabled')
+  })
+}
+
+window._stele.disableWeb3Action = function () {
+  window._stele.isWeb3Actioning = true
+  document.querySelectorAll('button.web3-action').forEach(function (element) {
+    element.classList.add('disabled')
+  })
+}
+
 window._stele.showToolTip = async function (message, time = 5000) {
   let tooltip = document.querySelector('#tooltip')
   tooltip.textContent = message
@@ -185,12 +199,12 @@ window._stele.appendPost = async function (post) {
 
 window._stele.showPostDialog = async function () {
   document.querySelector('#post-dialog').style.display = 'flex'
-  document.querySelector('body').classList.add('modal-opened')
+  document.body.classList.add('modal-opened')
 }
 
 window._stele.closePostDialog = async function () {
   document.querySelector('#post-dialog').style.display = 'none'
-  document.querySelector('body').classList.remove('modal-opened')
+  document.body.classList.remove('modal-opened')
 }
 
 window._stele.createPost = async function () {
@@ -198,8 +212,7 @@ window._stele.createPost = async function () {
     let textArea = document.querySelector('textarea[name=post-content]')
     let accounts = await window.ethereum.enable()
 
-    window._stele.isWeb3Actioning = true
-    document.querySelector('button.web3-action').classList.add('disabled')
+    window._stele.disableWeb3Action()
 
     if (window.hasMetamask && accounts.length > 0) {
       window._stele.Post.methods.Create(textArea.value).send({
@@ -210,8 +223,7 @@ window._stele.createPost = async function () {
         window._stele.showToolTip('Post has already sent to blockchain, please wait for confirmation.')
       }).then(function (result) {
         window._stele.showToolTip('Post has already published!')
-        window._stele.isWeb3Actioning = false
-        document.querySelector('button.web3-action').classList.remove('disabled')
+        window._stele.enableWeb3Action()
       })
     } else {
       window._stele.showToolTip('Please install metamask plugin')
@@ -224,8 +236,7 @@ window._stele.setUsername = async function () {
     let inputArea = document.querySelector('input[name=username]')
     let accounts = await window.ethereum.enable()
 
-    window._stele.isWeb3Actioning = true
-    document.querySelector('button.web3-action').classList.add('disabled')
+    window._stele.enableWeb3Action()
 
     if (window.hasMetamask && accounts.length > 0) {
       window._stele.Username.methods.Update(web3.utils.fromAscii(inputArea.value)).send({
@@ -234,8 +245,7 @@ window._stele.setUsername = async function () {
         window._stele.showToolTip('Username has already sent to blockchain, please wait for confirmation.')
       }).then(function (result) {
         window._stele.showToolTip('Username has already updated!')
-        window._stele.isWeb3Actioning = false
-        document.querySelector('button.web3-action').classList.remove('disabled')
+        window._stele.enableWeb3Action()
       })
     } else {
       window._stele.showToolTip('Please install metamask plugin')
@@ -248,8 +258,7 @@ window._stele.setDescription = async function () {
     let textArea = document.querySelector('textarea[name=description]')
     let accounts = await window.ethereum.enable()
 
-    window._stele.isWeb3Actioning = true
-    document.querySelector('button.web3-action').classList.add('disabled')
+    window._stele.enableWeb3Action()
 
     if (window.hasMetamask && accounts.length > 0) {
       window._stele.Description.methods.Update(textArea.value).send({
@@ -258,8 +267,7 @@ window._stele.setDescription = async function () {
         window._stele.showToolTip('Desctiption has already sent to blockchain, please wait for confirmation.')
       }).then(function (result) {
         window._stele.showToolTip('Desctiption has already updated!')
-        window._stele.isWeb3Actioning = false
-        document.querySelector('button.web3-action').classList.remove('disabled')
+        window._stele.enableWeb3Action()
       })
     } else {
       window._stele.showToolTip('Please install metamask plugin')
