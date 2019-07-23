@@ -307,6 +307,10 @@ window._stele.setDescription = async function () {
 }
 
 window._stele.likePost = async function (postIdx) {
+  if (!window.hasMetamask) {
+    window._stele.showToolTip('Please install metamask to like post!')
+    return
+  }
   let executeFunc = function () {
     return window._stele.PostLike.methods.Like(postIdx)
   }
