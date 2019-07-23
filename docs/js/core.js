@@ -308,7 +308,7 @@ window._stele.setDescription = async function () {
 
 window._stele.likePost = async function (postIdx) {
   if (!window.hasMetamask) {
-    window._stele.showToolTip('Please install metamask to like post!')
+    window._stele.showToolTip('Please install Metamask to like the post!')
     return
   }
   let executeFunc = function () {
