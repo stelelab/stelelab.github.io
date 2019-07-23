@@ -227,9 +227,19 @@ window._stele.createPost = async function () {
       }).on('transactionHash', function (result) {
         textArea.value = ''
         window._stele.closePostDialog()
-        window._stele.showToolTip('Post has already sent to blockchain, please wait for confirmation.')
+        window._stele.showToolTip('Post has already sent to the blockchain, please wait for confirmation.')
       }).then(function (result) {
         window._stele.showToolTip('Post has already published!')
+        window._stele.enableWeb3Action()
+      }).catch(function (error) {
+        let message
+        if (error.message.includes('User denied transaction signature')) {
+          message = 'Post canceled!'
+        } else {
+          message = 'Post sent failed, please reload the page or check your metamask.'
+        }
+        window._stele.closePostDialog()
+        window._stele.showToolTip(message)
         window._stele.enableWeb3Action()
       })
     } else {
@@ -249,7 +259,7 @@ window._stele.setUsername = async function () {
       window._stele.Username.methods.Update(web3.utils.fromAscii(inputArea.value)).send({
         from: accounts[0]
       }).on('transactionHash', function (result) {
-        window._stele.showToolTip('Username has already sent to blockchain, please wait for confirmation.')
+        window._stele.showToolTip('Username has already sent to the blockchain, please wait for confirmation.')
       }).then(function (result) {
         window._stele.showToolTip('Username has already updated!')
         window._stele.enableWeb3Action()
@@ -271,7 +281,7 @@ window._stele.setDescription = async function () {
       window._stele.Description.methods.Update(textArea.value).send({
         from: accounts[0]
       }).on('transactionHash', function (result) {
-        window._stele.showToolTip('Desctiption has already sent to blockchain, please wait for confirmation.')
+        window._stele.showToolTip('Desctiption has already sent to the blockchain, please wait for confirmation.')
       }).then(function (result) {
         window._stele.showToolTip('Desctiption has already updated!')
         window._stele.enableWeb3Action()
