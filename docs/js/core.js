@@ -68,10 +68,10 @@ window._stele.getAddress = async function (username) {
 window._stele.getPostLikeStatus = async function (postIdxList) {
   let address = '0x0'
   if (window.hasMetamask) {
-      let accounts = await window.ethereum.enable()
-      if (accounts.length > 0) {
-        address = accounts[0]
-      }
+    let accounts = await window.ethereum.enable()
+    if (accounts.length > 0) {
+      address = accounts[0]
+    }
   }
   return window._stele.GetPostLike.methods.get(postIdxList, address).call().then(function (results) {
     let status = {}
@@ -212,7 +212,11 @@ window._stele.appendPost = async function (post, context) {
   let likeButton = document.createElement('button')
   likeButton.textContent = `${context.liked ? 'Liked' : 'Like'} ${context.likeCount}`
   likeButton.classList.add('lite')
-  likeButton.addEventListener('click', function () { window._stele.likePost(post.returnValues.postIdx) })
+  if (context.liked) {
+    likeButton.addEventListener('click', function () { window._stele.unlikePost(post.returnValues.postIdx) })
+  } else {
+    likeButton.addEventListener('click', function () { window._stele.likePost(post.returnValues.postIdx) })
+  }
 
   let commentButton = document.createElement('button')
   commentButton.textContent = 'Comment'
@@ -339,6 +343,23 @@ window._stele.likePost = async function (postIdx) {
     finished: 'Like has already published!',
     canceled: 'Like canceled!',
     error: 'Like sent failed. Please reload the page or check your metamask.'
+  })
+}
+
+window._stele.unlikePost = async function (postIdx) {
+  if (!window.hasMetamask) {
+    window._stele.showToolTip('Please install Metamask to unlike the post!')
+    return
+  }
+  let executeFunc = function () {
+    return window._stele.PostLike.methods.Unlike(postIdx)
+  }
+  let sentCallBackFunc = function () {}
+  window._stele.callWeb3Cation(executeFunc, sentCallBackFunc, {
+    sent: 'Unlike has already sent to the blockchain. Please wait for confirmation.',
+    finished: 'Unlike has already published!',
+    canceled: 'Unlike canceled!',
+    error: 'Unlike sent failed. Please reload the page or check your metamask.'
   })
 }
 
