@@ -20,7 +20,7 @@ button {
 button:hover {
   background-color: #555;
 }
-button.disabled {
+button:disabled {
   cursor: not-allowed;
   background-color: #555;
 }
@@ -88,6 +88,9 @@ a.original:hover {
 }
 .address {
   word-wrap: break-word;
+}
+.error-message {
+  color: red;
 }
 .navbar {
   position: fixed;

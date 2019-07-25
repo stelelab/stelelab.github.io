@@ -1,3 +1,31 @@
+async function disableUsernameUpdate (message) {
+  document.querySelector('#username-error-message').textContent = message
+  document.querySelector('button[name="set-username"]').disabled = true
+}
+async function enableUsernameUpdate () {
+  document.querySelector('#username-error-message').textContent = ''
+  document.querySelector('button[name="set-username"]').disabled = false
+}
+async function checkUsernameInput () {
+  let username = document.querySelector('input[name="username"]').value
+  const constraints = [
+    [/^[A-Za-z0-9-_.]+$/, `Your username can only contain letters, numbers and '-', '_', '.'`],
+    [/^[A-Za-z0-9-_.]{1,20}$/, `Your username should not exceed 20 characters.`],
+    [/^([A-Za-z0-9].*|)[A-Za-z0-9]$/, `Symbols cannot be used in first and last character.`],
+    [/^(?:(?:([-_.])(?![-_.]))|[A-Za-z0-9])+$/, `Symbols cannot be used continously.`]
+  ]
+  if (username === '') {
+    disableUsernameUpdate('')
+    return
+  }
+  for (let i = 0; i < constraints.length; i++) {
+    if (!constraints[i][0].test(username)) {
+      disableUsernameUpdate(constraints[i][1])
+      return
+    }
+  }
+  enableUsernameUpdate()
+}
 window.addEventListener('coreLoaded', async function () {
   let hash = window.location.hash.replace('#', '')
   let address, username
@@ -48,6 +76,7 @@ window.addEventListener('coreLoaded', async function () {
       document.querySelector('button[name="set-description"]').addEventListener('click', window._stele.setDescription)
     }
   }
+  document.querySelector('input[name="username"]').addEventListener('keyup', checkUsernameInput)
 
   window._stele.loadPageWithUserAddress(address)
 })

@@ -57,8 +57,9 @@
         <h1>User Settings</h1>
         <div>
           <h2>Username</h2>
-          <input type="text" name="username" placeholder="Type username...">
-          <button type="button" name="set-username" class="web3-action">Update username</button>
+          <input type="text" name="username" class="invalid" placeholder="Type username..." autocomplete="off">
+          <button type="button" name="set-username" class="web3-action" disabled="disabled">Update username</button>
+          <div id="username-error-message" class="error-message"></div>
         </div>
         <div>
           <h2>Description</h2>

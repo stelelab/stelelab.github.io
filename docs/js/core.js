@@ -17,14 +17,14 @@ window._stele.copyToClipboard = async function (data) {
 window._stele.enableWeb3Action = function () {
   window._stele.isWeb3Actioning = false
   document.querySelectorAll('button.web3-action').forEach(function (element) {
-    element.classList.remove('disabled')
+    element.disabled = false
   })
 }
 
 window._stele.disableWeb3Action = function () {
   window._stele.isWeb3Actioning = true
   document.querySelectorAll('button.web3-action').forEach(function (element) {
-    element.classList.add('disabled')
+    element.disabled = true
   })
 }
 
