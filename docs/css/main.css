@@ -97,7 +97,6 @@ a.original:hover {
   width: 100vw;
   margin: 0;
   top: 0;
-  padding: 10px 0;
   background: rgba(255, 255, 255, 0.95);
   display: flex;
   justify-content: space-between;
@@ -111,8 +110,7 @@ a.original:hover {
   margin-right: 10px;
 }
 .navbar .logo {
-  font-weight: bold;
-  font-size: 1.5rem;
+  height: 56px;
 }
 .navbar-padding {
   height: 4rem;
