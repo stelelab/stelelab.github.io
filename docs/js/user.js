@@ -11,8 +11,8 @@ async function checkUsernameInput () {
   const constraints = [
     [/^[A-Za-z0-9-_.]+$/, `Your username can only contain letters, numbers and '-', '_', '.'`],
     [/^[A-Za-z0-9-_.]{1,20}$/, `Your username should not exceed 20 characters.`],
-    [/^([A-Za-z0-9].*|)[A-Za-z0-9]$/, `Symbols cannot be used in first and last character.`],
-    [/^(?:(?:([-_.])(?![-_.]))|[A-Za-z0-9])+$/, `Symbols cannot be used continously.`]
+    [/^([A-Za-z0-9].*|)[A-Za-z0-9]$/, `Not use symbols in the first and last character.`],
+    [/^(?:(?:([-_.])(?![-_.]))|[A-Za-z0-9])+$/, `Not use symbols continuously.`]
   ]
   if (username === '') {
     disableUsernameUpdate('')
