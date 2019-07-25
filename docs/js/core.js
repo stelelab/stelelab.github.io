@@ -65,13 +65,23 @@ window._stele.getAddress = async function (username) {
   return window._stele.Username.methods.getOwner(username).call()
 }
 
-window._stele.getPostLikeCounts = async function (postIdxList) {
-  return window._stele.GetMultiPostLikeCount.methods.Get(postIdxList).call().then(function (counts) {
-    let countMap = {}
+window._stele.getPostLikeStatus = async function (postIdxList) {
+  let address = '0x0'
+  if (window.hasMetamask) {
+      let accounts = await window.ethereum.enable()
+      if (accounts.length > 0) {
+        address = accounts[0]
+      }
+  }
+  return window._stele.GetPostLike.methods.get(postIdxList, address).call().then(function (results) {
+    let status = {}
     for (let i = 0; i < postIdxList.length; i++) {
-      countMap[postIdxList[i]] = parseInt(counts[i])
+      status[postIdxList[i]] = {
+        likeCount: parseInt(results[i]),
+        liked: parseInt(results[i + postIdxList.length]) === 1
+      }
     }
-    return countMap
+    return status
   })
 }
 
@@ -99,8 +109,11 @@ window._stele.loadWithIdx = async function (idx) {
     }
   }).then(async function (posts) {
     if (posts.length > 0) {
-      let likeCounts = await window._stele.getPostLikeCounts([idx])
-      await window._stele.appendPost(posts[0], { likeCount: likeCounts[idx] })
+      let likeStatus = await window._stele.getPostLikeStatus([idx])
+      await window._stele.appendPost(posts[0], {
+        likeCount: likeStatus[idx].likeCount,
+        liked: likeStatus[idx].liked
+      })
     } else {
       window._stele.showNotFound(`Post ${idx} not exists!`)
     }
@@ -118,10 +131,13 @@ window._stele.loadPageWithUserAddress = async function (address) {
     for (let i = 0; i < posts.length; i++) {
       postIdxList.push(parseInt(posts[i].returnValues.postIdx))
     }
-    let likeCounts = await window._stele.getPostLikeCounts(postIdxList)
+    let likeStatus = await window._stele.getPostLikeStatus(postIdxList)
     for (let i = posts.length - 1; i >= 0; i--) {
       let postIdx = parseInt(posts[i].returnValues.postIdx)
-      await window._stele.appendPost(posts[i], { likeCount: likeCounts[postIdx] })
+      await window._stele.appendPost(posts[i], {
+        likeCount: likeStatus[postIdx].likeCount,
+        liked: likeStatus[postIdx].liked
+      })
     }
   })
 }
@@ -138,10 +154,13 @@ window._stele.loadPage = async function (lastIdx, pageSize) {
       postIdx: postIdxList
     }
   }).then(async function (posts) {
-    let likeCounts = await window._stele.getPostLikeCounts(postIdxList)
+    let likeStatus = await window._stele.getPostLikeStatus(postIdxList)
     for (let i = posts.length - 1; i >= 0; i--) {
       let postIdx = parseInt(posts[i].returnValues.postIdx)
-      let context = { likeCount: likeCounts[postIdx] }
+      let context = {
+        likeCount: likeStatus[postIdx].likeCount,
+        liked: likeStatus[postIdx].liked
+      }
       await window._stele.appendPost(posts[i], context)
     }
   })
@@ -191,7 +210,7 @@ window._stele.appendPost = async function (post, context) {
 
   // Post footer
   let likeButton = document.createElement('button')
-  likeButton.textContent = `Like ${context.likeCount}`
+  likeButton.textContent = `${context.liked ? 'Liked' : 'Like'} ${context.likeCount}`
   likeButton.classList.add('lite')
   likeButton.addEventListener('click', function () { window._stele.likePost(post.returnValues.postIdx) })
 
@@ -350,7 +369,7 @@ window._stele.startApp = async function () {
   window._stele.PostLike = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"liked","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"postIdx","type":"uint256"}],"name":"Like","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"postIdx","type":"uint256"}],"name":"Unlike","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"postLikeCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"postIdx","type":"uint256"},{"indexed":true,"name":"user","type":"address"}],"name":"Liked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"postIdx","type":"uint256"},{"indexed":true,"name":"user","type":"address"}],"name":"Unliked","type":"event"}]`), '0x2E8c1E33e82E2A5b93076f32Aa5EFE3dFaAa1676')
 
   // web3 method contracts
-  window._stele.GetMultiPostLikeCount = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"postIdxList","type":"uint256[]"}],"name":"Get","outputs":[{"name":"counts","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"}]`), '0x9a4d5ec269fd4A4714915B3bc1f3A37034010Cea')
+  window._stele.GetPostLike = new window.web3.eth.Contract(JSON.parse(`[{"constant":true,"inputs":[{"name":"postIdxList","type":"uint256[]"},{"name":"user","type":"address"}],"name":"get","outputs":[{"name":"counts","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"}]`), '0x69955cDFb003fFC3EC655ffE046c41a9cBd82445')
 
   // Initialize navbars
   document.querySelector('button[name="show-post-dialog"]').addEventListener('click', window._stele.showPostDialog)
